@@ -1,8 +1,30 @@
 import Vue from 'vue'
-import App from './App.vue'
 
-Vue.config.productionTip = false
+/*const data = {
+	titulo: 'Curso de VueJS',
+	contador: 0
+}*/
+
+Vue.component('jm-component', {
+	data: function() {
+		return {
+			titulo: 'Curso de VueJS',
+			contador: 0
+		}
+	},
+	methods: {
+		incrementar: function() {
+			this.contador++
+		}
+	},
+	template: `
+		<div>
+			<h1>{{ titulo }}</h1>
+			<button @click="incrementar">Clicado {{ contador }} vezes</button>
+		</div>
+	`
+})
 
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+	el: '#app'
+})
