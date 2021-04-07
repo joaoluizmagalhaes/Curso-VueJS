@@ -7,8 +7,8 @@
 
 <script>
 
-import AppHeader from './AppHeader.vue'
-import AppContador from './AppContador.vue'
+import AppHeader from './components/shared/AppHeader.vue'
+import AppContador from './components/contador/Contador.vue'
 
 export default {
     components: {
