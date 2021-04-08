@@ -11,7 +11,7 @@
         <FilmesListaIten 
           v-for="filme in filmes"
           :key="filme.id"
-          v-bind="filme"
+          :filme="filme"
         />
 
 
@@ -41,10 +41,10 @@ export default {
   data() {
     return {
       filmes: [
-        { id: 1, titulo: 'Vingadores: Guerra Infinita', ano: 2018 },
-        { id: 2, titulo: 'Homem Formiga e Vespa', ano: 2018 },
-        { id: 3, titulo: 'Pantera Negra', ano: 2018 },
-        { id: 4, titulo: 'Deadpool 2', ano: 2018 }
+        { id: 1, titulo: 'Vingadores: Guerra Infinita', ano: 2018, diretor: 'Stan Lee' },
+        { id: 2, titulo: 'Homem Formiga e Vespa', ano: 2018, diretor: 'Stan Lee' },
+        { id: 3, titulo: 'Pantera Negra', ano: 2018, diretor: 'Stan Lee' },
+        { id: 4, titulo: 'Deadpool 2', ano: 2018, diretor: 'Stan Lee' }
       ]
     }
   }

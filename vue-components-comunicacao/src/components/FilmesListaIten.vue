@@ -1,34 +1,16 @@
 <template>
     <li class="list-group-item">
-        <span>{{ filmeTituloConcatenado }} | {{ ano }}</span>
+        <span>{{ filme.titulo }} | {{ filme.ano }}</span>
         <button class="btn btn-success float-right">Editar</button>
     </li>
 </template>
 <script>
 export default {
     props: {
-        titulo: {
-            type: String,
-            required: true,
-            /*default() {
-                return 'Vingadores'
-            },
-            validator(titulo  ) {
-                return titulo.includes('Marvel')
-            }*/
-        },
-        ano: {
-            type: Number,
+        filme: {
+            type: Object,
             required: true
         }
-    },
-    computed: {
-        filmeTituloConcatenado() {
-            return `Título: ${this.titulo}`
-        }
-    },
-    created() {
-        console.log(typeof this.titulo)
     }
 }
 </script>
