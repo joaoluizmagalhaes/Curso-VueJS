@@ -11,7 +11,7 @@
         <FilmesListaIten 
           v-for="(filme, index) in filmes"
           :key="index"
-          :filmeTitulo="filme"/>
+          :filmeTitulo="filme"/> 
 
       </ul>
     </div>
