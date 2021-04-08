@@ -11,9 +11,6 @@ export default {
         filmeTituloConcatenado() {
             return `Título: ${this.filmeTitulo}`
         }
-    },
-    created() {
-        console.log('Filme título: ', this.filmeTitulo)
     }
 }
 </script>
