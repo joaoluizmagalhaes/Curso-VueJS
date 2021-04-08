@@ -1,7 +1,7 @@
 <template>
     <li class="list-group-item">
         <span>{{ filme.titulo }} | {{ filme.ano }}</span>
-        <button class="btn btn-success float-right">Editar</button>
+        <button @click="selecionar" class="btn btn-success float-right">Editar</button>
     </li>
 </template>
 <script>
@@ -10,6 +10,11 @@ export default {
         filme: {
             type: Object,
             required: true
+        }
+    },
+    methods: {
+        selecionar() {
+            this.$emit('selecionarFilme', this.filme)
         }
     }
 }
