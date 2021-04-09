@@ -38,4 +38,8 @@
     .link {
         float: right;
     }
+
+    .post-paragrafo {
+        color: green;
+    }
 </style>
