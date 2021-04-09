@@ -1,7 +1,13 @@
 <template>
   <div id="app">
+    
     <h1>Vue JS</h1>
-    <Post />
+    
+    <Post>
+      <h2>Components no Vue</h2>
+      <p>Components são uma das peças mais importantes no Vue</p>
+    </Post>
+
   </div>
 
 </template>

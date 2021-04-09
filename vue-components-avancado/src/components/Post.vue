@@ -1,3 +1,6 @@
 <template>
-    <h2>Components no Vus</h2>
+    <div>
+        <slot> </slot>        
+    </div>
+
 </template>
