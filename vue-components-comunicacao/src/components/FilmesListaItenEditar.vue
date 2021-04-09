@@ -59,6 +59,11 @@ export default {
             }
         }
     },
+    watch: {
+        filme(novoFilme) {
+            this.filmeLocal - Object.assign({}, novoFilme)
+        }
+    },
     methods: {
         salvarFilme() {
             //this.$emit('atualizarFilme', this.filmeLocal)
