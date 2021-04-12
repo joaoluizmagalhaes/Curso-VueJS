@@ -6,11 +6,13 @@
     <button @click="componentSelecionado = 'Home' ">Home</button>
     <button @click="componentSelecionado = 'Sobre' ">Sobre</button>
     <button @click="componentSelecionado = 'PostsLista' ">Posts</button>
-
-    <component 
-      :is="componentSelecionado"
-      v-bind="propsAtuais">
-    </component> 
+    
+    <keep-alive>
+      <component 
+        :is="componentSelecionado"
+        v-bind="propsAtuais">
+      </component> 
+    </keep-alive>
 
   </div>
   
