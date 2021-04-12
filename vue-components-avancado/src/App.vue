@@ -1,21 +1,15 @@
 <template>
   <div id="app" class="container">
     
-    <h1>Forma Padrão</h1>
-  
-    <PostsLista :posts="posts" />
+    <h1>Components Dinâmicos</h1>
 
-    <hr>
+    <button @click="componentSelecionado = 'Home' ">Home</button>
+    <button @click="componentSelecionado = 'Sobre' ">Sobre</button>
+    <button @click="componentSelecionado = 'PostsLista' ">Posts</button>
 
-    <h1>Slots com Escopo</h1>
+    <p>{{ componentSelecionado }}</p>
 
-    <PostsLista :posts="posts">
-      <template v-slot="{ meuPost }">
-        <h2>{{ meuPost.titulo }}</h2>
-        <p>{{ meuPost.conteudo }}</p>
-        <small>{{ meuPost.autor }}</small>
-      </template>
-    </PostsLista>
+    <component :is="componentSelecionado"></component> 
 
   </div>
   
@@ -23,14 +17,19 @@
 
 <script>
 
+import Home from './components/Home.vue'
+import Sobre from './components/Sobre.vue'
 import PostsLista from './components/PostsLista.vue'
 
 export default {
   components: {
-    PostsLista
+    Home,
+    PostsLista,
+    Sobre
   },
   data() {
     return {
+      componentSelecionado: 'Home',
       posts: [
         { id: 1, titulo: 'Components no Vue', conteudo: 'Components são uma das peças mais importantes no VueJS.', autor: 'João Luiz'},
         { id: 2, titulo: 'Distribuindo conteúdo co Slots', conteudo: 'Slots podem ser usados como repositórios de código HTLM', autor: 'Joao'}
