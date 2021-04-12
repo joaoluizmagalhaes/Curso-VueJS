@@ -17,7 +17,7 @@
 
           <h3>Preencha abaixo</h3>
 
-          <form>
+          <form @submit.prevent="enviar" @reset="resetar">
 
             <div class="form-group">
               <label>Nome:</label>
@@ -77,8 +77,16 @@
 
             <div class="form-group">
               <label>Ocupação:</label>
-              <select class="form-control" placeholder="Seu email">
-                <option>Selecione uma opção...</option>
+              <select class="form-control" v-model="desenvolvedor.ocupacao">
+                <option value="" disabled>Selecione uma opção...</option>
+                <option
+                  v-for="(ocupacao, indice) in ocupacoes "
+                  :key="indice"
+                  :value="ocupacao"
+                  
+                >
+                  {{ ocupacao }}
+                </option>
               </select>
             </div>  
 
@@ -87,22 +95,42 @@
               <p>Tecnologias:</p>
 
               <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" value="JavaScript">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  value="JavaScript"
+                  v-model="desenvolvedor.tecnologias"  
+                >
                 <label class="form-check-label">JavaScript</label>
               </div>
 
-              <div class="form-check form-check-inline" value="Vue JS">
-                <input type="checkbox" class="form-check-input">
+              <div class="form-check form-check-inline">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input"
+                  value="Vue JS"
+                  v-model="desenvolvedor.tecnologias"
+                >
                 <label class="form-check-label">Vue JS</label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" value="Vuex">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input"
+                  value="Vuex"
+                  v-model="desenvolvedor.tecnologias"
+                >
                 <label class="form-check-label">Vuex</label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input" value="Vue Router">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input"
+                  value="Vue Router"
+                  v-model="desenvolvedor.tecnologias"
+                >
                 <label class="form-check-label">Vue Router</label>
               </div>
 
@@ -120,19 +148,36 @@
 
             <div class="form-group">
 
+              <AppRange 
+                label="Salário pretendido:"
+                v-model.number="desenvolvedor.salario"
+                min="1000"
+                max="15000"
+                step="500"
+                :inputClasses="[{'form-control-range': true}, 'minha-classe']"
+              />
+              
+            </div>
+
+
+            <div class="form-group">
+
               <div class="form-check form-check-inline">
                 <input 
                   type="checkbox" 
                   class="form-check-input"
                   v-model="desenvolvedor.notificacoes"
+                  true-value="Sim"
+                  false-value="Não"
                 >
                 <label class="form-check-label">Receber notificações por email</label>
               </div>
 
             </div>
 
-            <button class="btn btn-secondary">Resetar</button>
-            <button class="btn btn-success">Enviar</button>
+            <button class="btn btn-secondary" type="reset">Resetar</button>
+            <button class="btn btn-success" type="submit">Enviar</button>
+            <!-- <button class="btn btn-success" type="button" @click="enviar">Enviar</button> -->
 
           </form>
 
@@ -152,14 +197,24 @@
               <li class="list-group-item"><strong>Email:</strong> {{ desenvolvedor.email }}</li>
               <li class="list-group-item"><strong>Idade:</strong> {{ desenvolvedor.idade }}</li>
               <li class="list-group-item"><strong>Gênero:</strong> {{ desenvolvedor.genero }}</li>
-              <li class="list-group-item"><strong>Ocupação:</strong> </li>
-              <li class="list-group-item"><strong>Tecnologias:</strong> </li>
+              <li class="list-group-item"><strong>Ocupação:</strong> {{ desenvolvedor.ocupacao }}</li>
+              <li class="list-group-item"><strong>Salário pretendido:</strong> {{ desenvolvedor.salario }}</li>
+              <li class="list-group-item"><strong>Tecnologias:</strong> 
+                <ul>
+                  <li 
+                    v-for="(tecnologia, indice) in desenvolvedor.tecnologias"
+                    :key="indice"
+                  >
+                    {{ tecnologia }}
+                  </li>
+                </ul>
+              </li>
               <li class="list-group-item"><strong>Biografia:</strong> 
                 <pre>
                   {{ desenvolvedor.biografia }}
                 </pre>
               </li>
-              <li class="list-group-item"><strong>Receber notificações?</strong> {{ desenvolvedor.notificacoes ? 'Sim' : 'Não' }}</li>
+              <li class="list-group-item"><strong>Receber notificações?</strong> {{ desenvolvedor.notificacoes }}</li>
             </ul>
 
             <div class="card-header">Model</div>
@@ -180,18 +235,47 @@
 </template>
 
 <script>
+
+import AppRange from './components/Range.vue'
+
 export default {
+  components: {
+    AppRange
+  },
   data() {
     return {
-      desenvolvedor: {
+      desenvolvedor:{},
+      valoresPadroes: {
         nome: 'João',
         email: 'dukejlf@gmail.com',
         idade: 38,
         genero: 'Masculino',
+        tecnologias: [],
         biografia: 'Desenvolvedor web a 8 anos.',
-        notificacoes: false
-      }
+        notificacoes: 'Não',
+        ocupacao: '' ,
+        salario: 1000
+      },
+      ocupacoes: [
+        'Dev Front-End (Web)',
+        'Dev Front-End (mobile)',
+        'Dev Front-End (Web e mobile)',
+        'Dev Back-end',
+        'Dev Full-Stack'
+      ]
     }  
+  },
+  methods: {
+    enviar() {
+      const formularioEnviado = Object.assign({}, this.desenvolvedor)
+      console.log('Formulário enviado!', formularioEnviado)
+    },
+    resetar() {
+      this.desenvolvedor = Object.assign({}, this.valoresPadroes)
+    }
+  },
+  created() {
+    this.resetar()
   }
 }
 </script>
