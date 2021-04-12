@@ -54,12 +54,22 @@
               <p>Gênero:</p>
 
               <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" value="Masculino">
+                <input 
+                  type="radio" 
+                  class="form-check-input" 
+                  value="Masculino"
+                  v-model="desenvolvedor.genero"  
+                >
                 <label class="form-check-label">Masculino</label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" value="Feminino">
+                <input 
+                  type="radio" 
+                  class="form-check-input" 
+                  value="Feminino"
+                  v-model="desenvolvedor.genero" 
+                >
                 <label class="form-check-label">Feminino</label>
               </div>
 
@@ -100,13 +110,22 @@
 
             <div class="form-group">
               <label>Resumo de perfil:</label>
-              <textarea class="form-control" placeholder="Conte-nos um pouco sobre você..."></textarea>
+              <textarea 
+                class="form-control" 
+                placeholder="Conte-nos um pouco sobre você..."
+                v-model="desenvolvedor.biografia"
+              >
+              </textarea>
             </div>
 
             <div class="form-group">
 
               <div class="form-check form-check-inline">
-                <input type="checkbox" class="form-check-input">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input"
+                  v-model="desenvolvedor.notificacoes"
+                >
                 <label class="form-check-label">Receber notificações por email</label>
               </div>
 
@@ -132,11 +151,15 @@
               <li class="list-group-item"><strong>Nome:</strong> {{ desenvolvedor.nome }}</li>
               <li class="list-group-item"><strong>Email:</strong> {{ desenvolvedor.email }}</li>
               <li class="list-group-item"><strong>Idade:</strong> {{ desenvolvedor.idade }}</li>
-              <li class="list-group-item"><strong>Gênero:</strong> </li>
+              <li class="list-group-item"><strong>Gênero:</strong> {{ desenvolvedor.genero }}</li>
               <li class="list-group-item"><strong>Ocupação:</strong> </li>
               <li class="list-group-item"><strong>Tecnologias:</strong> </li>
-              <li class="list-group-item"><strong>Biografia:</strong> </li>
-              <li class="list-group-item"><strong>Receber notificações?</strong> </li>
+              <li class="list-group-item"><strong>Biografia:</strong> 
+                <pre>
+                  {{ desenvolvedor.biografia }}
+                </pre>
+              </li>
+              <li class="list-group-item"><strong>Receber notificações?</strong> {{ desenvolvedor.notificacoes ? 'Sim' : 'Não' }}</li>
             </ul>
 
             <div class="card-header">Model</div>
@@ -161,9 +184,12 @@ export default {
   data() {
     return {
       desenvolvedor: {
-        nome: '',
-        email: '',
-        idade: 0
+        nome: 'João',
+        email: 'dukejlf@gmail.com',
+        idade: 38,
+        genero: 'Masculino',
+        biografia: 'Desenvolvedor web a 8 anos.',
+        notificacoes: false
       }
     }  
   }
