@@ -6,8 +6,9 @@
     <button @click="componentSelecionado = 'Home' ">Home</button>
     <button @click="componentSelecionado = 'Sobre' ">Sobre</button>
     <button @click="componentSelecionado = 'PostsLista' ">Posts</button>
+    <button @click="componentSelecionado = 'Assincrono' ">Assincrono</button>
     
-    <keep-alive>
+    <keep-alive :exclude="['Home', 'PostsLista']">
       <component 
         :is="componentSelecionado"
         v-bind="propsAtuais">
@@ -28,7 +29,8 @@ export default {
   components: {
     Home,
     PostsLista,
-    Sobre
+    Sobre,
+    Assincrono: () => import('./components/Assincrono.vue')
   },
   data() {
     return {
