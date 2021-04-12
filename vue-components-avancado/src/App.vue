@@ -1,11 +1,19 @@
 <template>
   <div id="app" class="container">
     
-    <h1>Vue JS</h1>
+    <h1>Forma Padrão</h1>
+  
+    <PostsLista :posts="posts" />
+
+    <hr>
+
+    <h1>Slots com Escopo</h1>
 
     <PostsLista :posts="posts">
-      <template slots-scope="slotProps">
-        <h2>{{ slotProps.titulo }}</h2>
+      <template slot-scope="slotProps">
+        <h2>{{ slotProps.meuPost.titulo }}</h2>
+        <p>{{ slotProps.meuPost.conteudo }}</p>
+        <smal>{{ slotProps.meuPost.autor }}</smal>
       </template>
     </PostsLista>
 
