@@ -10,10 +10,10 @@
     <h1>Slots com Escopo</h1>
 
     <PostsLista :posts="posts">
-      <template slot-scope="slotProps">
-        <h2>{{ slotProps.meuPost.titulo }}</h2>
-        <p>{{ slotProps.meuPost.conteudo }}</p>
-        <smal>{{ slotProps.meuPost.autor }}</smal>
+      <template v-slot="{ meuPost }">
+        <h2>{{ meuPost.titulo }}</h2>
+        <p>{{ meuPost.conteudo }}</p>
+        <small>{{ meuPost.autor }}</small>
       </template>
     </PostsLista>
 
