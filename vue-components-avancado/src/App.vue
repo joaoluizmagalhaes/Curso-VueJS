@@ -30,7 +30,18 @@ export default {
     Home,
     PostsLista,
     Sobre,
-    Assincrono: () => import('./components/Assincrono.vue')
+    Assincrono: () => ({
+      component: new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(import('./components/Assincrono.vue'))
+          reject('Carregamento falhou!')
+        }, 2000)
+      }),
+      loading: { template: '<p>Carregando...</p>' },
+      error: { template: '<p>Erro ao carregaro o component!</p>'},
+      delay: 200,
+      timeout: 3000
+    })
   },
   data() {
     return {
