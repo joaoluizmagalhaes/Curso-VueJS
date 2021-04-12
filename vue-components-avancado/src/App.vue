@@ -7,6 +7,7 @@
     <button @click="componentSelecionado = 'Sobre' ">Sobre</button>
     <button @click="componentSelecionado = 'PostsLista' ">Posts</button>
     <button @click="componentSelecionado = 'Assincrono' ">Assincrono</button>
+    <button @click="componentSelecionado = 'Contato' ">Contato</button>
     
     <keep-alive :exclude="['Home', 'PostsLista']">
       <component 
@@ -25,8 +26,16 @@ import Home from './components/Home.vue'
 import Sobre from './components/Sobre.vue'
 import PostsLista from './components/PostsLista.vue'
 
+const Contato = {
+  render: (h) => h({
+    name: 'ContatoDados',
+    template: '<h2>Component anônimo</h2>'
+  })
+}
+
 export default {
   components: {
+    Contato,
     Home,
     PostsLista,
     Sobre,
@@ -41,7 +50,8 @@ export default {
       error: { template: '<p>Erro ao carregaro o component!</p>'},
       delay: 200,
       timeout: 3000
-    })
+    }),
+
   },
   data() {
     return {
