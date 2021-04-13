@@ -20,14 +20,57 @@
       <transition name="slide" type="animation" :duration="{ enter: 1200, leave: 500 }">
         <div class="alert alert-primary" v-if="mostrar">Slide</div>
       </transition>
-
-      <hr>
-
       <transition
-        enter-active-class="animate__animated animate__bounceInDown"
+
+        appear
+        appear-active-class="animate__animated animate__flipInY"
+
+        @before-appear="beforeAppear"
+        @appear="appear"
+        @after-appear="afterAppear"
+        @appear-cancelled="appearCancelled"
+
+        enter-active-class="animate__animated animate__bounceInLeft"
         leave-active-class="animate__animated animate__bounceOutDown"
       >
         <div class="alert alert-primary" v-if="mostrar">Animate CSS</div>
+      </transition>
+
+      <transition
+
+        appear
+
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter"
+        @enter-cancelled="enterCancelled"
+
+        @before-leave="beforeLeave"
+        @leave="leave"
+        @after-leave="afterLeave"
+        @leave-cancelled="leaveCancelled"
+
+        :css="false"
+      >
+        <div class="alert alert-primary" v-if="mostrar">Animação JS</div>
+      </transition>
+
+      <hr>
+
+      <div class="form-group">
+        <select class="form-control" v-model="animacaoSelecionada">
+          <option value="fade">Fade</option>
+          <option value="zoom">Zoom</option>
+          <option value="slide">Slide</option>
+        </select>
+
+      </div>
+
+      <button class="btn btn-primary mb-3" @click="animar = !animar">Animar</button>
+
+      <transition :name="animacaoSelecionada">
+         <div class="alert alert-primary" v-if="animar" key="1">{{ animacaoSelecionada }}</div>
+         <div class="alert alert-success" v-else key="2">{{ animacaoSelecionada }}</div>
       </transition>
 
     </div>
@@ -40,7 +83,83 @@
 export default {
   data() {
     return {
-      mostrar: true
+      animar: true,
+      mostrar: true,
+      animacaoSelecionada: 'fade'
+    }
+  },
+  methods: {
+    beforeAppear() {
+      console.log('beforeAppear')
+    },
+    appear() {
+      console.log('appear')
+    },
+    afterAppear() {
+      console.log('afterAppear')
+    },
+    appearCancelled() {
+      console.log('appearCancelled')
+    },
+    beforeEnter(el) {
+      console.log('beforeEnter')
+      el.style.opacity = 0
+    },
+    enter(el, done) {
+      console.log('enter')
+      
+      let contagem = 0
+
+      const intervalo = setInterval(() => {
+        el.style.opacity = +el.style.opacity + 0.1
+        contagem++
+
+        if(contagem > 10) {
+          clearInterval(intervalo)
+          done()
+        }
+
+      }, 150)
+
+      
+    },
+    afterEnter() {
+      console.log('afterEnter')
+    },
+    enterCancelled() {
+      console.log('enterCancelled')
+    },
+    beforeLeave(el) {
+      console.log('beforeLeave')
+      el.style.transition = 'width 0.1s'
+      el.style.overflow = 'hidden'
+      el.style.whiteSpace = 'nowrap'
+    },
+    leave(el, done) {
+      console.log('leave')
+
+      let contagem = 0
+
+      const tamanho = el.offsetWidth
+
+      const intervalo = setInterval(() => {
+        el.style.width = (tamanho * (1 - (contagem / 10))) + 'px'
+        contagem++
+
+        if(contagem > 10) {
+          clearInterval(intervalo)
+          done()
+        }
+
+
+      }, 150)
+
+    },
+    afterLeave() {
+      console.log('afterLeave')
+    },
+    leaveCancelled() {
+      console.log('leaveCancelled')
     }
   }
 }
