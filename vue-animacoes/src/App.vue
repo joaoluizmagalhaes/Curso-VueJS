@@ -9,7 +9,68 @@
     </div>
 
     <div class="container">
-    <!--
+      
+      <h3 class="font-weight-light">Animações de estado</h3>
+      
+      <div class="form-group">
+        <input 
+          class="form-control"
+          v-model="numero"
+          step="50"
+        >
+      </div>
+
+      <div class="alert alert-info">
+        <div class="font-weight-light">
+          <strong>Número: </strong>
+          <span>{{ numeroAnimado}}</span>
+        </div>
+      </div>
+
+      <hr>
+
+
+      <h3 class="font-weight-light">Tecnologias</h3>
+
+      <div class="row">
+        <div class="col-sm-2">
+          <button class="btn btn-info" @click="embaralhar">Embaralhar</button>
+        </div>
+
+        <div class="col-sm-10">
+          <div class="form-group">
+            <input 
+              type="text" 
+              class="form-control"
+              placeholder="Insira um novo inter e pressione enter"
+              @keyup.enter="adicionar"
+              ref="input"
+            >
+          </div>
+        </div>
+      </div>
+
+      
+
+      <transition-group tag="ul" class="list-group" name="slide">
+        <li 
+          class="list-group-item"
+          v-for="(tecnologia, indice) in tecnologias"
+          :key="tecnologia"
+          >
+            <span>{{ tecnologia }}</span>
+            <button 
+              class="btn btn-danger btn-sm float-right"
+              @click="remover(indice)"  
+            >
+              x
+            </button>
+          </li>
+      </transition-group>
+      
+      <hr>
+
+
       <button class="btn btn-primary mb-3" @click="mostrar = !mostrar">Alternar</button>
       <transition name="fade">
         <div class="alert alert-primary" v-if="mostrar">Fade</div>
@@ -55,7 +116,7 @@
         <div class="alert alert-primary" v-if="mostrar">Animação JS</div>
       </transition>
 
-      <hr> -->
+      <hr>
       
       <div class="form-group">
         <label>Animações: </label>
@@ -77,12 +138,27 @@
 
       </div>
 
-      <button class="btn btn-primary mb-3" @click="animar = !animar">Animar</button>
-
       <transition :name="animacaoSelecionada" mode="out-in">
          <div :class="classesDeAlerta" :key="alertaAtual" >{{ animacaoSelecionada }}</div>
          
       </transition>
+
+      <hr>
+
+      <div class="form-group">
+        <label>Component: </label>
+        <select class="form-control" v-model="componentSelecionado">
+          <option value="AppHome">Home</option>
+          <option value="AppSobre">Sobre</option>
+        </select>
+
+      </div>
+
+      <transition :name="animacaoSelecionada" mode="out-in">
+        <component :is="componentSelecionado"></component>
+   
+      </transition>
+
 
     </div>
 
@@ -91,13 +167,30 @@
 </template>
 
 <script>
+
+import { shuffle } from 'lodash'
+import { TweenLite } from 'gsap'
+
 export default {
+  components: {
+    AppHome: () => import('./components/Home.vue'),
+    AppSobre: () => import('./components/Sobre.vue')
+  },
   data() {
     return {
       animar: true,
       mostrar: true,
       animacaoSelecionada: 'fade',
-      alertaAtual: 'info'
+      alertaAtual: 'info',
+      componentSelecionado: 'AppHome',
+      tecnologias : [
+        'JavaScript',
+        'Vue JS',
+        'Vuex',
+        'Vue Router'
+      ],
+      numero: 0,
+      numeroInterpolado: 0
     }
   },
   computed: {
@@ -106,9 +199,27 @@ export default {
         alert: true,
         [`alert-${this.alertaAtual}`]: true
       }
+    },
+    numeroAnimado() {
+      return this.numeroInterpolado.toFixed(0)
     }
   },
   methods: {
+    adicionar(event){
+      const novoIten = event.target.value
+      if (novoIten) {
+        const indice = Math.floor(Math.random() * this.tecnologias.length)
+        this.tecnologias.splice(indice, 0, novoIten)
+        this.$refs.input.value = ''
+
+      }
+    },
+    remover(indice) {
+      this.tecnologias.splice(indice, 1)
+    },
+    embaralhar() {
+      this.tecnologias = shuffle(this.tecnologias)
+    },
     beforeAppear() {
       console.log('beforeAppear')
     },
@@ -181,17 +292,30 @@ export default {
     leaveCancelled() {
       console.log('leaveCancelled')
     }
+  },
+  watch: {
+    numero(novoNumero) {
+      TweenLite.to(this.$data, 2, {numeroInterpolado: novoNumero})
+    }
   }
 }
 </script>
 
-<style >
-  body {
-    overflow: hidden;
-  }
-</style>
 
 <style scoped>
+
+  .zoom-move,
+  .slide-move,
+  .fade-move {
+    transition: all 1s;
+  }
+
+  .zoom-leave-active,
+  .slide-leave-active,
+  .fade-leave-active {
+    position: absolute;
+    width: calc( 100% - 100px);
+  }
 
   .zoom-enter,
   .zoom-leave-to {
