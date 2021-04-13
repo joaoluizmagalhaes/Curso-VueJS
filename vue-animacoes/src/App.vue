@@ -9,7 +9,7 @@
     </div>
 
     <div class="container">
-
+    <!--
       <button class="btn btn-primary mb-3" @click="mostrar = !mostrar">Alternar</button>
       <transition name="fade">
         <div class="alert alert-primary" v-if="mostrar">Fade</div>
@@ -55,9 +55,10 @@
         <div class="alert alert-primary" v-if="mostrar">Animação JS</div>
       </transition>
 
-      <hr>
-
+      <hr> -->
+      
       <div class="form-group">
+        <label>Animações: </label>
         <select class="form-control" v-model="animacaoSelecionada">
           <option value="fade">Fade</option>
           <option value="zoom">Zoom</option>
@@ -66,11 +67,21 @@
 
       </div>
 
+      <div class="form-group">
+        <label>Mensagem: </label>
+        <select class="form-control" v-model="alertaAtual">
+          <option value="info">Info</option>
+          <option value="warning">Alerta</option>
+          <option value="success">Secesso</option>
+        </select>
+
+      </div>
+
       <button class="btn btn-primary mb-3" @click="animar = !animar">Animar</button>
 
-      <transition :name="animacaoSelecionada">
-         <div class="alert alert-primary" v-if="animar" key="1">{{ animacaoSelecionada }}</div>
-         <div class="alert alert-success" v-else key="2">{{ animacaoSelecionada }}</div>
+      <transition :name="animacaoSelecionada" mode="out-in">
+         <div :class="classesDeAlerta" :key="alertaAtual" >{{ animacaoSelecionada }}</div>
+         
       </transition>
 
     </div>
@@ -85,7 +96,16 @@ export default {
     return {
       animar: true,
       mostrar: true,
-      animacaoSelecionada: 'fade'
+      animacaoSelecionada: 'fade',
+      alertaAtual: 'info'
+    }
+  },
+  computed: {
+    classesDeAlerta() {
+      return {
+        alert: true,
+        [`alert-${this.alertaAtual}`]: true
+      }
     }
   },
   methods: {
