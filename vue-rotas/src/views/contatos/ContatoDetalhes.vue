@@ -12,22 +12,28 @@
 
 <script>
 export default {
-    data() {
+    props: {
+        id: {
+            type: Number,
+            required: true
+        }
+    },
+    /*data() {
         return {
             id:  this.$route.params.id
         }
     },
-    /*watch: {
+    watch: {
         '$route'(to, from ) {
             this.id = to.params.id
         }
-    },*/
+    },
     beforeRouteUpdate(to, from, next) {
         this.id = to.params.id
         next()
-    },
+    },*/
     created() {
-        console.log('Parametros da rota: ', this.$route.params)
+        console.log('Parametros da rota: ', this.$props)
     }
 }
 </script>
