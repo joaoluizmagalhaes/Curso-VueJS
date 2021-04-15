@@ -1,6 +1,24 @@
 <template>
     <div>
-        <h3 class="font-weight-light">Página inicial da lista de contatos</h3>
-        <p>Seção destinada para visualização de detalhes e edição dos contatos.</p>
+        <router-link 
+                :to="{ path: '/contatos/novo' }" 
+                class="btn btn-success mb-4 mr-2"
+            >
+                Cadastrar Contato
+        </router-link>
+        <ContatosLista :busca="busca" />
+        
     </div>
 </template>
+
+<script>
+
+import ContatosLista from './../../components/contatos/ContatoLista.vue'
+
+export default {
+    components: {
+        ContatosLista
+    },
+    props: [ 'busca' ]
+}
+</script>

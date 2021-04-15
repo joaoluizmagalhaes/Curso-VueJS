@@ -1,6 +1,6 @@
 <template>
-    <div v-if="contato">
-        <h3 class="font-weight-light">Nome: {{ contato.nome }}</h3>
+    <div>
+        <h3 class="font-weight-light">Cadastre um novo contato:</h3>
 
         <form @submit.prevent="salvar">
             <div class="form-group">
@@ -18,7 +18,7 @@
                     type="email" 
                     class="form-control"
                     placeholder="Insira o email"
-                    v-model="contato.email"
+                   v-model="contato.email"
                 >
             </div>
             <button 
@@ -28,7 +28,7 @@
                 Voltar
             </button>
             <button type="submit" class="btn btn-success">
-                Salver
+                Salvar
             </button>
         </form>
 
@@ -44,7 +44,7 @@ export default {
     props: ['id'],
     data() {
         return {
-            contato: undefined,
+            contato: {},
             estaCancelando: true
         }
     },
@@ -60,7 +60,8 @@ export default {
     },
     methods: {
         salvar() {
-            EventBus.editarContato(this.contato)
+            const novoContato = Object.assign({}, this.contato)
+            EventBus.adicionarContato(novoContato)
             this.estaCancelando = false
             this.$router.push('/contatos')
         }

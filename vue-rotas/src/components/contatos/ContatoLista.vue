@@ -32,6 +32,7 @@
 <script>
 
 import ContatosListaIten from './ContatosListaIten.vue'
+import EventBus from '@/event-bus'
 
 export default {
     components: {
@@ -40,12 +41,7 @@ export default {
     props: ['busca'],
     data() {
         return {
-            contatos: [
-                { id: 1, nome: 'Isaac Newton', email: 'isaac@email.com' },
-                { id: 2, nome: 'Albert Einstein', email: 'einstein@email.com' },
-                { id: 3, nome: 'Stephen Hawking', email: 'stephen@email.com' },
-
-            ]
+            contatos: []
         }
     },
     computed: {
@@ -55,6 +51,9 @@ export default {
                 ? this.contatos
                 : this.contatos.filter(c => c.nome.toLowerCase().includes(busca.toLowerCase()))
         }
+    },
+    created(){
+        this.contatos = EventBus.contatos
     },
     methods: {
         buscar(event) {
