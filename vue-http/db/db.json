@@ -11,12 +11,6 @@
       "concluido": false
     },
     {
-      "titulo": "Aprender Axios",
-      "concluido": false,
-      "id": 3,
-      "curso": "Vue JS"
-    },
-    {
       "titulo": "Aprender Vue Router",
       "concluido": true,
       "id": 4,
@@ -24,8 +18,9 @@
     },
     {
       "titulo": "Aprender Rsiliencia",
-      "concluido": true,
-      "id": 5
+      "concluido": false,
+      "id": 5,
+      "curso": "Vue JS"
     }
   ]
 }

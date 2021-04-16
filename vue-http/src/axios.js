@@ -20,17 +20,32 @@ instance.interceptors.request.use(config => {
         ...config.data,
         curso: 'Vue JS'
     }
-    //return config
-    return new Promise((resolve) => {
+
+    config.headers.common['Authorization'] = `Bearer token_jwt`
+    config.headers.put['Meu-cabecalho'] = 'Curso VueJS'
+
+    return config
+    /*return new Promise((resolve) => {
         console.log('Fazendo requisição aguardar...')
         setTimeout(() => {
             console.log('Enviando requisição...')
             resolve(config)
         }, 2000)
-    })
+    })*/
 
 }, error => {
     console.log('Erro ao fazer requisição: ', error)
+    return Promise.reject(error)
+})
+
+instance.interceptors.response.use(response => {
+    console.log('interceptando resposta...')
+    if(Array.isArray(response.data)) {
+        response.data = response.data.slice(1,3)
+    }
+    return response
+}, error => {
+    console.log('Erro capturado no interceptador de respostas: ', error)
     return Promise.reject(error)
 })
 
