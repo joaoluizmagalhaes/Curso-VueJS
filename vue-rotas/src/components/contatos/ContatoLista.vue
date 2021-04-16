@@ -15,17 +15,19 @@
         <hr>
         
         <ul class="list-group" v-if="contatosFiltrados.length > 0">
-            <ContatosListaIten 
-                class="list-group-item"
-                v-for="contato in contatosFiltrados"
-                :key="contato.id"
-                :contato="contato"
-            />
+            <transition-group name="slideDown" mode="out-in">  
+                <ContatosListaIten 
+                    class="list-group-item"
+                    v-for="contato in contatosFiltrados"
+                    :key="contato.id"
+                    :contato="contato"
+                />
+            </transition-group>
         </ul>
 
         <p v-else>Nenhum contato cadastrado</p>
 
-        <button class="btn btn0secondaru mt-4 mb-4" @click="voltar">Voltar</button>
+        <button class="btn btn-secondary mt-4 mb-4" @click="voltar">Voltar</button>
     </div>
 </template>
 
@@ -74,3 +76,26 @@ export default {
     }
 }
 </script>
+<style scoped>
+    .slideDown-enter,
+    .slideDown-leave-to {
+        transform: translateX(-50px);
+        opacity: 0;
+    }
+
+    .slideDown-enter-active,
+    .slideDown-leave-active {
+        transition: all 0.3s
+    }
+
+    .slideUp-enter,
+    .slideUp-leave-to {
+        transform: translateX(50px);
+        opacity: 0;
+    }
+
+    .slideUp-enter-active,
+    .slideUp-leave-active {
+        transition: all 0.3s
+    }
+</style>

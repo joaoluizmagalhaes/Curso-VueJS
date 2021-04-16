@@ -62,9 +62,6 @@ const router = new VueRouter({
                 name: 'contato',
                 props: extrairParametroId,
             },
-            {
-                path: ':id(\\d+)/apagar/',
-            },
             { 
                 //path: ':id(\\d+)/editar/:opcional?', 
                 //path: ':id(\\d+)/editar/:zeroOuMais*', 

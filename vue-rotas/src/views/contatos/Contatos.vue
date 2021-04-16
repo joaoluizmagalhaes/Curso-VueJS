@@ -7,7 +7,7 @@
         <transition name="slideDown" mode="out-in">
             <router-view name="contato-detalhes"></router-view>
         </transition>
-         <transition name="slideDown" mode="out-in">
+        <transition name="slideDown" mode="out-in">
             <router-view name="novo"></router-view>
         </transition>
 

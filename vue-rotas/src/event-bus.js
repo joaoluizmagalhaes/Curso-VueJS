@@ -24,7 +24,6 @@ export default new Vue({
         },
         adicionarContato(novoContato) {
             const indice = this.contatos.length + 1
-            
             const novoContatoOb = {
                 id: indice,
                 nome: novoContato.nome,
@@ -33,7 +32,8 @@ export default new Vue({
             this.contatos.push(novoContatoOb)
 
         },
-        apagarContato(indice) {
+        apagarContato(contato) {
+            const indice = this.contatos.findIndex(c => c.id === contato.id)
             this.contatos.splice(indice, 1)
         }
     }
