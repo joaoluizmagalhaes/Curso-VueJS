@@ -13,10 +13,13 @@
                 </button>
                 </div>
         </div>
-        <ul class="list-group" v-if="tarefas.length > 0">
+
+        <h3 class="font-weight-light mt-4">A Fazer ( {{ tarefasAFazer.length }} )</h3>
+
+        <ul class="list-group" v-if="tarefasAFazer.length > 0">
 
             <TarefasListaIten 
-                v-for="tarefa in tarefas"
+                v-for="tarefa in tarefasAFazer"
                 :key="tarefa.id"
                 :tarefa="tarefa"
                 @editar="selecionarTarefaParaEdicao"
@@ -24,7 +27,23 @@
 
         </ul>
 
-        <p v-else>Nenenhuma tarefa criada</p>
+        <p v-else>Nenenhuma tarefa a fazer.</p>
+
+        <h3 class="font-weight-light mt-4">Concluidas ( {{ totalDeTarefasConcluidas }} )</h3>
+
+        <ul class="list-group" v-if="tarefasConcluidas.length > 0">
+
+            <TarefasListaIten 
+                v-for="tarefa in tarefasConcluidas"
+                :key="tarefa.id"
+                :tarefa="tarefa"
+                @editar="selecionarTarefaParaEdicao"
+            />
+
+        </ul>
+
+        <p v-else>Nenenhuma tarefa concluida.</p>
+
         
         <TarefaSalvar 
             v-if="exibirFormulario"
@@ -34,6 +53,8 @@
 </template>
 
 <script>
+
+import { mapGetters, mapState, mapMutations } from 'vuex'
 
 import TarefaSalvar from '@/components/TarefaSalvar'
 import TarefasListaIten from '@/components/TarefasListaIten'
@@ -46,15 +67,42 @@ export default {
     data() {
         return {
             exibirFormulario: false,
-            tarefaSelecionada: undefined,
+            tarefaSelecionada: undefined   
+        }
+    },
+    computed: {
+        ...mapState(['tarefas']),
+        ...mapGetters([
+            'tarefasAFazer', 
+            'tarefasConcluidas', 
+            'totalDeTarefasConcluidas'
+        ])
+    },
+    created() {
+        /*this.$store.commit({
+            type: 'listarTarefas',
             tarefas: [
                 { id: 1, titulo: 'Aprender Vue', concluido: true },
                 { id: 2, titulo: 'Aprender Vue Router', concluido: true },
                 { id: 3, titulo: 'Aprender Vuex', concluido: false }
             ]
-        }
+        })*/
+        this.carregarTarefas({
+            tarefas: [
+                { id: 1, titulo: 'Aprender Vue', concluido: true },
+                { id: 2, titulo: 'Aprender Vue Router', concluido: true },
+                { id: 3, titulo: 'Aprender Vuex', concluido: false }
+            ]
+        })
     },
     methods: {
+        //...mapMutations(['listarTarefas']),
+        ...mapMutations({
+            carregarTarefas: 'listarTarefas',
+            listarTarefas: (commit, payload, options) => {
+                commit('listarTarefas', payload, options)
+            }
+        }),
         exibirFormularioCriarTarefa() {
             if(this.tarefaSelecionada) {
                 this.tarefaSelecionada = undefined
