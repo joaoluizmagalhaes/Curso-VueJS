@@ -54,10 +54,12 @@
 
 <script>
 
-import { mapGetters, mapState, mapMutations } from 'vuex'
+import { createNamespacedHelpers } from 'vuex'
 
 import TarefaSalvar from '@/components/TarefaSalvar'
 import TarefasListaIten from '@/components/TarefasListaIten'
+
+const { mapActions, mapGetters, mapState } = createNamespacedHelpers('tarefas')
 
 export default {
     components: {
@@ -75,32 +77,33 @@ export default {
         ...mapGetters([
             'tarefasAFazer', 
             'tarefasConcluidas', 
-            'totalDeTarefasConcluidas'
+            'totalDeTarefasConcluidas',
+            'boasVindas'
         ])
     },
     created() {
-        /*this.$store.commit({
-            type: 'listarTarefas',
+        /*this.$store.dispatch('listarTarefas', {
             tarefas: [
                 { id: 1, titulo: 'Aprender Vue', concluido: true },
                 { id: 2, titulo: 'Aprender Vue Router', concluido: true },
                 { id: 3, titulo: 'Aprender Vuex', concluido: false }
             ]
         })*/
-        this.carregarTarefas({
-            tarefas: [
-                { id: 1, titulo: 'Aprender Vue', concluido: true },
-                { id: 2, titulo: 'Aprender Vue Router', concluido: true },
-                { id: 3, titulo: 'Aprender Vuex', concluido: false }
-            ]
-        })
+
+        console.log('Usuário Atual: ', this.boasVindas )
+        this.listarTarefas()
+            .then(() => {
+                console.log('Actions executadas')
+                console.log('Usuário Atual: ', this.boasVindas )
+            })
+
+
     },
     methods: {
-        //...mapMutations(['listarTarefas']),
-        ...mapMutations({
+        ...mapActions({
             carregarTarefas: 'listarTarefas',
-            listarTarefas: (commit, payload, options) => {
-                commit('listarTarefas', payload, options)
+            listarTarefas: (dispatch, payload, options) => {
+                return dispatch('listarTarefas', payload, options)
             }
         }),
         exibirFormularioCriarTarefa() {
