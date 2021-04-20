@@ -1,3 +1,5 @@
+import * as types from './mutations-types'
+
 export default {
     buscarTarefas: (/*context, payload*/) => {
         return new Promise((resolve, /*reject*/) => {
@@ -12,8 +14,7 @@ export default {
     },
     listarTarefas: async ({ commit, dispatch }/*, payload*/) => {
         const tarefas = await dispatch('buscarTarefas')
-        commit('listarTarefas', { tarefas })
-        commit('logar', 'João Luiz', { root: true })
+        commit(types.LISTAR_TAREFAS, { tarefas })
         dispatch('logar', 'João Luiz', { root: true })
     }
 }
