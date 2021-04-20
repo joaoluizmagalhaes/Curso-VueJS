@@ -56,8 +56,8 @@
 
 import { createNamespacedHelpers } from 'vuex'
 
-import TarefaSalvar from '@/components/TarefaSalvar'
-import TarefasListaIten from '@/components/TarefasListaIten'
+import TarefaSalvar from '@/resources/tarefas/_components/TarefaSalvar'
+import TarefasListaIten from '@/resources/tarefas/_components/TarefasListaIten'
 
 const { mapActions, mapGetters, mapState } = createNamespacedHelpers('tarefas')
 

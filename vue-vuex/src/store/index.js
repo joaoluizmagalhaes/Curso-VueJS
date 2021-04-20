@@ -1,32 +1,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import contador from '@/resources/contador/_store/index'
+import tarefas from '@/resources/tarefas/_store/index'
+
 Vue.use(Vuex)
 
+const state ={
+    usuario: 'Joao'
+}
+
+const getters = {
+    mensagemBoasVindas: state => `Olá ${state.usuario}`
+}
+
+const actions = {
+    logar: ({ commit }, usuario) => {
+        commit('logar', usuario)
+    }
+}
+
+const mutations = {
+    logar: (state, usuario) => {
+        state.usuario = usuario
+    }
+}
+
+const modules = {
+    contador,
+    tarefas
+}
 
 const store = new Vuex.Store({
-    state: {
-        usuario: 'Joao'
-    },
-    getters: {
-        mensagemBoasVindas: state => `Olá ${state.usuario}`
-    },
-    actions: {
-        logar: ({ commit }, usuario) => {
-            commit('logar', usuario)
-        }
-    },
-    mutations: {
-        logar: (state, usuario) => {
-            state.usuario = usuario
-        }
-    },
-    modules: {
-        contador: contadorModule,
-        tarefas: tarefasModule
-    }
+    state,
+    getters,
+    actions,
+    mutations,
+    modules
 })
-
-console.log('Store: ', store)
 
 export default store
