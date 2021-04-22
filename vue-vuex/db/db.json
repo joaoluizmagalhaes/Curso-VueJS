@@ -1,19 +1,29 @@
 {
-    "tarefas": [
-        { 
-            "id": 1, 
-            "titulo": "Aprender Vue", 
-            "concluido": true 
-        },
-        { 
-            "id": 2, 
-            "titulo": "Aprender Vue Router", 
-            "concluido": true 
-        },
-        { 
-            "id": 3, 
-            "titulo": "Aprender Vuex", 
-            "concluido": false
-        }
-    ]
+  "tarefas": [
+    {
+      "id": 3,
+      "titulo": "Aprender Vuex",
+      "concluido": true
+    },
+    {
+      "titulo": "Aprender PHP",
+      "concluido": true,
+      "id": 5
+    },
+    {
+      "titulo": "Aprender jquery",
+      "concluido": true,
+      "id": 6
+    },
+    {
+      "titulo": "Aprender React",
+      "concluido": true,
+      "id": 7
+    },
+    {
+      "titulo": "Aprender Angular",
+      "concluido": true,
+      "id": 8
+    }
+  ]
 }

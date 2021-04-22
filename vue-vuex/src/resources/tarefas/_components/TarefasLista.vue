@@ -23,6 +23,8 @@
                 :key="tarefa.id"
                 :tarefa="tarefa"
                 @editar="selecionarTarefaParaEdicao"
+                @concluir="concluirTarefa({tarefa: $event})"
+                @deletar="confirmarRemocaoTarefa"            
             />
 
         </ul>
@@ -38,6 +40,8 @@
                 :key="tarefa.id"
                 :tarefa="tarefa"
                 @editar="selecionarTarefaParaEdicao"
+                @concluir="concluirTarefa({tarefa: $event})"
+                @deletar="confirmarRemocaoTarefa"            
             />
 
         </ul>
@@ -47,8 +51,10 @@
         
         <TarefaSalvar 
             v-if="exibirFormulario"
-            :tarefa="tarefaSelecionada"
+            @salvar="salvarTarefa"
         />
+
+        <div class="alert alert-danger" v-if="erro">{{ erro.message }}</div>
     </div>
 </template>
 
@@ -70,12 +76,14 @@ export default {
     },
     data() {
         return {
-            exibirFormulario: false,
-            tarefaSelecionada: undefined   
+            exibirFormulario: false 
         }
     },
     computed: {
-        ...mapState(['tarefas']),
+        ...mapState([
+            'tarefaSelecionada',
+            'erro'
+        ]),
         ...mapGetters([
             'tarefasAFazer', 
             'tarefasConcluidas', 
@@ -86,41 +94,49 @@ export default {
     created() {
 
         register(this.$store)
+        this.listarTarefas()
 
-        setTimeout(async () => {
-            
-            console.log('Usuário Atual: ', this.boasVindas )
-            
-            await this.listarTarefas()
-               
-            console.log('Actions executadas')
-
-            console.log('Usuário Atual: ', this.boasVindas )
-            
-            }, 1000)
-        console.log('Boas vindas: ', this.boasVindas )
     },
     methods: {
-        ...mapActions({
-            carregarTarefas: 'listarTarefas',
-            listarTarefas: (dispatch, payload, options) => {
-                return dispatch('listarTarefas', payload, options)
+        ...mapActions([
+            'concluirTarefa',
+            'criarTarefa',
+            'deletarTarefa',
+            'editarTarefa',
+            'listarTarefas',
+            'selecionarTarefa',
+            'resetarTarefaSelecionada'
+        ]),
+        confirmarRemocaoTarefa(tarefa) {
+            const confirmar = window.confirm(`Deseja deletar a tarefa "${tarefa.titulo}"?`)
+            if(confirmar) {
+                this.deletarTarefa({tarefa})
             }
-        }),
+        },
         exibirFormularioCriarTarefa() {
             if(this.tarefaSelecionada) {
-                this.tarefaSelecionada = undefined
+                this.resetarTarefaSelecionada()
                 return
             }
             this.exibirFormulario = !this.exibirFormulario
         },
+        async salvarTarefa(event) {
+            switch(event.operacao) {
+                case 'criar':
+                    await this.criarTarefa({ tarefa: event.tarefa })
+                    break
+                case 'editar':
+                    await this.editarTarefa({ tarefa: event.tarefa })
+            }
+            this.resetar()
+        },
         selecionarTarefaParaEdicao(tarefa) {
             this.exibirFormulario = true
-            this.tarefaSelecionada = tarefa
+            this.selecionarTarefa({ tarefa })
         },
         resetar() {
             this.exibirFormulario = false
-            this.tarefaSelecionada = undefined
+            this.resetarTarefaSelecionada()
         }
     }
 }
