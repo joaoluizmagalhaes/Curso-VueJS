@@ -31,6 +31,7 @@ type Record {
   amount: Float!
   type: Operation!
   date: DateTime!
+  description: String!
   tags: String
   note: String
 }
